@@ -1,2 +1,6 @@
-# local-storage
-The library to manage files in local storage.
+# Quillstack Local Storage
+
+```shell
+$ docker-compose up -d
+$ docker exec -w /var/www/html -it quillstack_local-storage sh
+```
