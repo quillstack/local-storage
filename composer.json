@@ -1,0 +1,33 @@
+{
+    "name": "quillstack/local-storage",
+    "description": "The library to manage files in local storage.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "quillstack",
+        "storage",
+        "php8",
+        "local"
+    ],
+    "homepage": "https://quillstack.org/local-storage",
+    "authors": [
+        {
+            "name": "Radek Ziemniewicz",
+            "email": "radek@quillstack.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Quillstack\\LocalStorage\\": "src/",
+            "Quillstack\\Tests\\LocalStorage\\": "tests/",
+            "Quillstack\\Fixtures\\LocalStorage\\": "tests/fixtures/"
+        }
+    },
+    "require": {
+        "php": "^8.0",
+        "quillstack/storage-interface": "^0.0.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}
