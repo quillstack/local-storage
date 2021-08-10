@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Quillstack\Tests\LocalStorage;
 
 use PHPUnit\Framework\TestCase;
-use Quillstack\LocalStorage\Exceptions\FileNotDeletedException;
-use Quillstack\LocalStorage\Exceptions\FileNotExistsException;
-use Quillstack\LocalStorage\Exceptions\FileNotSavedException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotDeletedException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotExistsException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotSavedException;
 use Quillstack\LocalStorage\LocalStorage;
 
 final class LocalStorageTest extends TestCase
@@ -96,7 +96,7 @@ final class LocalStorageTest extends TestCase
 
     public function testNotExistingFile()
     {
-        $this->expectException(FileNotExistsException::class);
+        $this->expectException(LocalFileNotExistsException::class);
 
         $this->storage->get('not-exists');
     }
@@ -122,14 +122,14 @@ final class LocalStorageTest extends TestCase
 
     public function testNotSaved()
     {
-        $this->expectException(FileNotSavedException::class);
+        $this->expectException(LocalFileNotSavedException::class);
 
         $this->storage->save('/dir/not/exists', 'world');
     }
 
     public function testNotDeleted()
     {
-        $this->expectException(FileNotDeletedException::class);
+        $this->expectException(LocalFileNotDeletedException::class);
 
         $this->storage->delete('/file-not-exists');
     }

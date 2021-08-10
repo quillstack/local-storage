@@ -6,7 +6,7 @@ namespace Quillstack\LocalStorage\Exceptions;
 
 use Quillstack\LocalStorage\LocalStorageException;
 
-final class FileNotSavedException extends LocalStorageException
+final class LocalFileNotSavedException extends LocalStorageException
 {
     //
 }
