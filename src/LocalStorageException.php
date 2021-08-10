@@ -11,5 +11,5 @@ class LocalStorageException extends RuntimeException
     /**
      * @var int
      */
-    const ERROR_CODE = 500;
+    public const ERROR_CODE = 500;
 }
