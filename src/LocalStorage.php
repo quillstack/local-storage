@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Quillstack\LocalStorage;
 
-use Quillstack\LocalStorage\Exceptions\FileNotDeletedException;
-use Quillstack\LocalStorage\Exceptions\FileNotExistsException;
-use Quillstack\LocalStorage\Exceptions\FileNotSavedException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotDeletedException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotExistsException;
+use Quillstack\LocalStorage\Exceptions\LocalFileNotSavedException;
 use Quillstack\StorageInterface\StorageInterface;
 use Throwable;
 
@@ -18,7 +18,7 @@ class LocalStorage implements StorageInterface
     public function get(string $path): mixed
     {
         if (!is_file($path)) {
-            throw new FileNotExistsException("File doesn't exist: {$path}");
+            throw new LocalFileNotExistsException("File doesn't exist: {$path}");
         }
 
         return file_get_contents($path);
@@ -48,7 +48,7 @@ class LocalStorage implements StorageInterface
         try {
             $savedBytes = file_put_contents($path, $contents);
         } catch (Throwable $exception) {
-            throw new FileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE, $exception);
+            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE, $exception);
         }
 
         return $savedBytes > 0;
@@ -80,7 +80,7 @@ class LocalStorage implements StorageInterface
         try {
             $deleted = unlink($path);
         } catch (Throwable $exception) {
-            throw new FileNotDeletedException(
+            throw new LocalFileNotDeletedException(
                 "File not deleted: {$path}",
                 LocalStorageException::ERROR_CODE,
                 $exception
