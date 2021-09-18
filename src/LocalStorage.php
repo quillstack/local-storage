@@ -43,7 +43,7 @@ class LocalStorage implements StorageInterface
     /**
      * {@inheritDoc}
      */
-    public function save(string $path, $contents): bool
+    public function save(string $path, mixed $contents): bool
     {
         try {
             $savedBytes = file_put_contents($path, $contents);
