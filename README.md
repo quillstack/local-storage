@@ -38,11 +38,14 @@ If you want to use it as a dependency:
 ```php
 use Quillstack\LocalStorage\LocalStorage;
 
-public function __construct(private LocalStorage $storage) {}
+public function __construct(private LocalStorage $storage)
+{
+    //
+}
 
 public function getTokenFromCache()
 {
-    $storage->get('var/cache/token.txt');
+    $this->storage->get('var/cache/token.txt');
 }
 ```
 
