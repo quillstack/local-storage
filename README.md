@@ -30,7 +30,7 @@ Create a class or inject it as a dependency:
 use Quillstack\LocalStorage\LocalStorage;
 
 $storage = new LocalStorage();
-$storage->save($path, 'var/cache/token.txt');
+$storage->save('var/cache/token.txt', 'muHaloosPps23sKkdsaaBBcei);
 ```
 
 If you want to use it as a dependency:
@@ -51,11 +51,11 @@ public function getTokenFromCache()
 
 ### Storage interface
 
-This package implements `quillstack/storage-interface`:
+This package implements `quillstack/storage-interface`: \
 https://github.com/quillstack/storage-interface \
 with methods:
 
-- `get()` Retrieve the contents of a file. \
+- `get()` Retrieves the contents of a file. \
 This method opens a file and return its contents, it throws an exception if file doesn't exist.
 - `exists()` Checks if the file exists on the storage.
 - `missing()` Checks if the file is missing from the storage.
