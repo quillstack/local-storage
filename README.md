@@ -30,7 +30,7 @@ Create a class or inject it as a dependency:
 use Quillstack\LocalStorage\LocalStorage;
 
 $storage = new LocalStorage();
-$storage->save('var/cache/token.txt', 'muHaloosPps23sKkdsaaBBcei);
+$storage->save('var/cache/token.txt', 'muHaloosPps23sKkdsaaBBcei');
 ```
 
 If you want to use it as a dependency:
