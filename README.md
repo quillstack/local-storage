@@ -69,13 +69,7 @@ This method deletes one or many files and throws an exception if error occurs du
 Run tests using a command:
 
 ```
-phpdbg -qrr vendor/bin/phpunit
-```
-
-Check the test coverage:
-
-```
-phpdbg -qrr vendor/bin/phpunit --coverage-html coverage tests
+phpdbg -qrr ./vendor/bin/unit-tests
 ```
 
 ### Docker

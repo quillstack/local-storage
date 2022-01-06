@@ -19,8 +19,7 @@
     "autoload": {
         "psr-4": {
             "Quillstack\\LocalStorage\\": "src/",
-            "Quillstack\\Tests\\LocalStorage\\": "tests/",
-            "Quillstack\\Fixtures\\LocalStorage\\": "tests/fixtures/"
+            "Quillstack\\LocalStorage\\Tests\\": "tests/"
         }
     },
     "require": {
@@ -30,6 +29,8 @@
     "require-dev": {
         "quillstack/unit-tests": "^1.0"
     },
+    "prefer-stable": true,
+    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-main": "1.0.x-dev"
