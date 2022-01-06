@@ -46,9 +46,13 @@ class LocalStorage implements StorageInterface
     public function save(string $path, mixed $contents): bool
     {
         try {
-            $savedBytes = file_put_contents($path, $contents);
+            $savedBytes = @file_put_contents($path, $contents);
         } catch (Throwable $exception) {
             throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE, $exception);
+        }
+
+        if ($savedBytes === false) {
+            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE);
         }
 
         return $savedBytes > 0;
@@ -78,13 +82,17 @@ class LocalStorage implements StorageInterface
     private function deleteOne(string $path): bool
     {
         try {
-            $deleted = unlink($path);
+            $deleted = @unlink($path);
         } catch (Throwable $exception) {
             throw new LocalFileNotDeletedException(
                 "File not deleted: {$path}",
                 LocalStorageException::ERROR_CODE,
                 $exception
             );
+        }
+
+        if ($deleted === false) {
+            throw new LocalFileNotDeletedException("File not deleted: {$path}", LocalStorageException::ERROR_CODE);
         }
 
         return $deleted;
