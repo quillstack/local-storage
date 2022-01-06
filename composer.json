@@ -19,8 +19,7 @@
     "autoload": {
         "psr-4": {
             "Quillstack\\LocalStorage\\": "src/",
-            "Quillstack\\Tests\\LocalStorage\\": "tests/",
-            "Quillstack\\Fixtures\\LocalStorage\\": "tests/fixtures/"
+            "Quillstack\\LocalStorage\\Tests\\": "tests/"
         }
     },
     "require": {
