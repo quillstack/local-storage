@@ -45,17 +45,7 @@ class LocalStorage implements StorageInterface
      */
     public function save(string $path, mixed $contents): bool
     {
-        try {
-            $savedBytes = @file_put_contents($path, $contents);
-        } catch (Throwable $exception) {
-            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE, $exception);
-        }
-
-        if ($savedBytes === false) {
-            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE);
-        }
-
-        return $savedBytes > 0;
+        return $this->saveLocally($path, $contents, true);
     }
 
     /**
@@ -73,11 +63,7 @@ class LocalStorage implements StorageInterface
     }
 
     /**
-     * Delete one file.
-     *
-     * @param string $path
-     *
-     * @return bool
+     * Deletes one file.
      */
     private function deleteOne(string $path): bool
     {
@@ -96,5 +82,31 @@ class LocalStorage implements StorageInterface
         }
 
         return $deleted;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function add(string $path, mixed $contents): bool
+    {
+        return $this->saveLocally($path, $contents, false);
+    }
+
+    /**
+     * Saves locally and overwrite or not.
+     */
+    private function saveLocally(string $path, mixed $contents, bool $overwrite = true)
+    {
+        try {
+            $savedBytes = @file_put_contents($path, $contents, $overwrite ? LOCK_EX : FILE_APPEND | LOCK_EX);
+        } catch (Throwable $exception) {
+            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE, $exception);
+        }
+
+        if ($savedBytes === false) {
+            throw new LocalFileNotSavedException("File not saved: {$path}", LocalStorageException::ERROR_CODE);
+        }
+
+        return $savedBytes > 0;
     }
 }

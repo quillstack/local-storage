@@ -45,7 +45,7 @@ class TestLocalStorage
 
     public function saveFile()
     {
-        $path = dirname(__FILE__) . '/../Fixtures/world.txt';
+        $path = dirname(__FILE__) . '/../Storage/world.txt';
         $this->storage->save($path, 'world');
         $contests = $this->storage->get($path);
         $this->storage->delete($path);
@@ -53,10 +53,42 @@ class TestLocalStorage
         $this->assertEqual->equal('world', $contests);
     }
 
+    public function saveMultipleLines()
+    {
+        $path = dirname(__FILE__) . '/../Storage/hello.txt';
+        $this->storage->save($path, 'world');
+        $this->storage->save($path, 'hello');
+        $contests = $this->storage->get($path);
+        $this->storage->delete($path);
+
+        $this->assertEqual->equal('hello', $contests);
+    }
+
+    public function addToFile()
+    {
+        $path = dirname(__FILE__) . '/../Storage/one.txt';
+        $this->storage->add($path, 'one');
+        $contests = $this->storage->get($path);
+        $this->storage->delete($path);
+
+        $this->assertEqual->equal('one', $contests);
+    }
+
+    public function addMultipleLines()
+    {
+        $path = dirname(__FILE__) . '/../Storage/two.txt';
+        $this->storage->add($path, 'one' . PHP_EOL);
+        $this->storage->add($path, 'two');
+        $contests = $this->storage->get($path);
+        $this->storage->delete($path);
+
+        $this->assertEqual->equal("one\ntwo", $contests);
+    }
+
     #[ProvidesDataFrom(FilesToDeleteDataProvider::class)]
     public function deleteOneFile(string $filename)
     {
-        $path = dirname(__FILE__) . "/../Fixtures/{$filename}.txt";
+        $path = dirname(__FILE__) . "/../Storage/{$filename}.txt";
         $this->storage->save($path, $filename);
         $contests = $this->storage->get($path);
         $deleted = $this->storage->delete($path);

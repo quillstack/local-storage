@@ -24,7 +24,7 @@
     },
     "require": {
         "php": "^8.0",
-        "quillstack/storage-interface": "^0.0.3"
+        "quillstack/storage-interface": "^0.1.0"
     },
     "require-dev": {
         "quillstack/unit-tests": "^1.0"
