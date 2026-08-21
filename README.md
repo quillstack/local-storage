@@ -1,6 +1,6 @@
 # Quillstack Local Storage
 
-[![Build Status](https://app.travis-ci.com/quillstack/local-storage.svg?branch=main)](https://app.travis-ci.com/quillstack/local-storage)
+[![Tests](https://github.com/quillstack/local-storage/actions/workflows/tests.yml/badge.svg)](https://github.com/quillstack/local-storage/actions/workflows/tests.yml)
 [![Downloads](https://img.shields.io/packagist/dt/quillstack/local-storage.svg)](https://packagist.org/packages/quillstack/local-storage)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=quillstack_local-storage&metric=coverage)](https://sonarcloud.io/dashboard?id=quillstack_local-storage)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=quillstack_local-storage&metric=ncloc)](https://sonarcloud.io/dashboard?id=quillstack_local-storage)
