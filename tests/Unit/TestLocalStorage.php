@@ -155,4 +155,45 @@ class TestLocalStorage
 
         $this->storage->delete('/file-not-exists');
     }
+
+    /**
+     * A path PHP refuses outright, rather than one it merely fails on: a null byte in it
+     * raises a ValueError, which is wrapped the same way a failure is.
+     */
+    public function aPathPhpRefusesIsReportedWhenSaving()
+    {
+        $this->assertExceptions->expect(LocalFileNotSavedException::class);
+
+        $this->storage->save("/tmp/quillstack\0test", 'world');
+    }
+
+    public function aPathPhpRefusesIsReportedWhenAdding()
+    {
+        $this->assertExceptions->expect(LocalFileNotSavedException::class);
+
+        $this->storage->add("/tmp/quillstack\0test", 'world');
+    }
+
+    public function aPathPhpRefusesIsReportedWhenDeleting()
+    {
+        $this->assertExceptions->expect(LocalFileNotDeletedException::class);
+
+        $this->storage->delete("/tmp/quillstack\0test");
+    }
+
+    /**
+     * What went wrong is kept, so a caller can see it was the path and not the disk.
+     */
+    public function theReasonIsKept()
+    {
+        try {
+            $this->storage->save("/tmp/quillstack\0test", 'world');
+        } catch (LocalFileNotSavedException $exception) {
+            $this->assertEqual->equal('ValueError', $exception->getPrevious()::class);
+
+            return;
+        }
+
+        $this->assertBoolean->isTrue(false);
+    }
 }
