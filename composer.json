@@ -27,7 +27,7 @@
         "quillstack/storage-interface": "^0.1"
     },
     "require-dev": {
-        "quillstack/unit-tests": "^0.3"
+        "quillstack/unit-tests": "^0.4"
     },
     "prefer-stable": true,
     "minimum-stability": "dev",
