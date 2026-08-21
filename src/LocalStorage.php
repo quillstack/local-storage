@@ -95,7 +95,7 @@ class LocalStorage implements StorageInterface
     /**
      * Saves locally and overwrite or not.
      */
-    private function saveLocally(string $path, mixed $contents, bool $overwrite = true)
+    private function saveLocally(string $path, mixed $contents, bool $overwrite = true): bool
     {
         try {
             $savedBytes = @file_put_contents($path, $contents, $overwrite ? LOCK_EX : FILE_APPEND | LOCK_EX);
