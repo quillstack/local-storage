@@ -9,7 +9,7 @@
         "php8",
         "local"
     ],
-    "homepage": "https://quillstack.org/storage",
+    "homepage": "https://quillstack.org/packages/local-storage",
     "authors": [
         {
             "name": "Radek Ziemniewicz",
