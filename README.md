@@ -16,7 +16,25 @@
 
 The package to manage files on the local storage.
 
-### Installation
+## Why this exists
+
+It is the implementation behind [quillstack/storage-interface](https://github.com/quillstack/storage-interface),
+and its whole job is to make an interface out of four PHP functions so that everything above it
+can be tested without a disk.
+
+The [cache](https://github.com/quillstack/cache), the [logger](https://github.com/quillstack/logger)
+and [dotenv](https://github.com/quillstack/dotenv) all read and write through that interface. In
+a test they are handed something that keeps files in an array; in production they are handed
+this. Neither knows the difference, and neither calls `file_put_contents` itself.
+
+**Nothing here does anything clever.** Reading it should take a minute and finding a bug in it
+should be hard, which is the point of a package this small.
+
+## Requirements
+
+- PHP 8.1 or newer
+
+## Installation
 
 To install this package, run the standard command using _Composer_:
 
@@ -24,7 +42,7 @@ To install this package, run the standard command using _Composer_:
 composer require quillstack/local-storage
 ```
 
-### Usage
+## Usage
 
 Create a class or inject it as a dependency:
 
@@ -66,7 +84,34 @@ This method throws an exception if there are any troubles with saving a file (e.
 - `delete()` Deletes one or more files. \
 This method deletes one or many files and throws an exception if error occurs during deleting a file.
 
-### Unit tests
+## Benchmark
+
+Measured with [quillstack/benchmark](https://github.com/quillstack/benchmark) on a thousand
+write-and-read pairs of a small file. Runs are interleaved and unconcurrent, each figure is the
+median of five, and PHP is 8.5.7.
+
+| | Version |
+| --- | --- |
+| quillstack/local-storage | 0.6.0 |
+| league/flysystem | 3.35.3 |
+
+| | Per write and read | Relative |
+| --- | --- | --- |
+| **quillstack/local-storage** | **83.6 µs** | — |
+| league/flysystem | 85.7 µs | 1.02× |
+
+**These are the same number.** Both call the same kernel, and two per cent between them is the
+filesystem rather than either library. A benchmark of two thin wrappers over `file_put_contents`
+was never going to say anything else, and it is here because the alternative is leaving a reader
+to wonder.
+
+The difference is what they reach. `league/flysystem` writes to S3, FTP, SFTP, Azure, Google
+Cloud, in-memory and a dozen more, with stream support, visibility, MIME detection and directory
+listings. This writes to the disk it is running on. **Where you need one of those, use
+Flysystem** — and where you need a `StorageInterface` implementation that does not bring an
+ecosystem with it, that is what this is.
+
+## Tests
 
 Run tests using a command:
 
@@ -74,9 +119,16 @@ Run tests using a command:
 phpdbg -qrr ./vendor/bin/unit-tests
 ```
 
-### Docker
+## The rest of Quillstack
 
-```shell
-$ docker-compose up -d
-$ docker exec -w /var/www/html -it quillstack_local-storage sh
-```
+This is one component of [Quillstack](https://github.com/quillstack), a PHP framework which is
+as simple to use as it is strict about what it does.
+
+- [quillstack/storage-interface](https://github.com/quillstack/storage-interface) — what this implements
+- [quillstack/cache](https://github.com/quillstack/cache) — which writes entries through it
+- [quillstack/logger](https://github.com/quillstack/logger) — which writes entries through it too
+- [quillstack/dotenv](https://github.com/quillstack/dotenv) — which reads a file through it
+
+## License
+
+MIT — see [LICENSE](https://github.com/quillstack/local-storage/blob/main/LICENSE).
